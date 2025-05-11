@@ -1,0 +1,87 @@
+html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>晚会幸运号码抽取</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: f5f5f5;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: e74c3c;
+        }
+        .number {
+            font-size: 72px;
+            font-weight: bold;
+            color: 2c3e50;
+            margin: 30px 0;
+        }
+        .info {
+            color: 7f8c8d;
+            font-size: 16px;
+        }
+        button {
+            background-color: 3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: 2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 您的晚会幸运号码 🎉</h1>
+        <div class="number" id="num"></div>
+        <p class="info">此号码已为您专属保留，请截图保存</p >
+        <button onclick="generateNumber()">重新生成</button>
+    </div>
+
+    <script>
+        // 生成1-1000的随机数
+        function generateNumber() {
+            const num = Math.floor(Math.random()*1000)+1;
+            document.getElementById("num").innerText = num;
+            
+            // 记录到本地存储防止刷新变号
+            if(!localStorage.getItem('myNumber')){
+                localStorage.setItem('myNumber', num);
+            }
+            updateDisplay();
+        }
+        
+        function updateDisplay() {
+            const storedNum = localStorage.getItem('myNumber');
+            const numElement = document.getElementById("num");
+            
+            if(storedNum) {
+                numElement.innerText = storedNum;
+                document.querySelector('button').style.display = 'none';
+            } else {
+                generateNumber();
+            }
+        }
+        
+        // 页面加载时执行
+        updateDisplay();
+    </script>
+</body>
+</html>
